@@ -163,14 +163,15 @@ var budsBattIndicator = GObject.registerClass({
         }
 
         if (this.statusArray[4] <= 100) {
+          this.case.show();
           this.caseLabel.set_text(this.statusArray[4] + "%");
         } else {
           this.case.hide();
         }
 
         //Setting the battery for the main icon
-        let onStates = [2,3]
-        if(this.statusArray[2]>this.statusArray[3] && onStates.includes(this.statusArray[0]){
+        let onStates = [1,2]
+        if(this.statusArray[2]>this.statusArray[3] && onStates.includes(this.statusArray[0])){
           this.buttonText.set_text(this.statusArray[2] + "%");
         }else{
           this.buttonText.set_text(this.statusArray[3] + "%");
@@ -189,9 +190,9 @@ var budsBattIndicator = GObject.registerClass({
   }
 });
 
-      var Log = function(msg) {
-        if (DEBUG)
-          log ("[budsBattery] " + msg);
-      }
+var Log = function(msg) {
+  if (DEBUG)
+    log ("[budsBattery] " + msg);
+}
 
-      export {budsBattIndicator, Log};
+export {budsBattIndicator, Log};

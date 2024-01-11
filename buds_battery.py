@@ -150,6 +150,7 @@ def main():
 
     port = host = None
     for match in service_matches:
+        # print(match)
         target_name = ""
         if isinstance(match["name"], str):
             target_name = "GEARMANAGER"
@@ -160,6 +161,8 @@ def main():
             port = match["port"]
             host = match["host"]
             break
+
+    # print(port, host)
 
     if port is None or host is None:
         print("Couldn't find the proprietary RFCOMM service")
