@@ -58,37 +58,46 @@ var budsBattIndicator = GObject.registerClass({
     //Creating the buds
     this.buds = new PopupMenu.PopupMenuItem("", {reactive: false});
     //Creating the left bud
+    var box = new St.BoxLayout({x_align: Clutter.ActorAlign.CENTER, x_expand: true});
     //Label
-    this.leftLabel = new St.Label({text: '', y_align: Clutter.ActorAlign.CENTER, });
-    this.buds.add_child(this.leftLabel);
+    this.leftLabel = new St.Label({text: '', y_align: Clutter.ActorAlign.CENTER, x_align: Clutter.ActorAlign.START,});
+    box.add_child(this.leftLabel);
     //Icon
     this.lIcon = new St.Icon({
       gicon: Gio.icon_new_for_string(this.path + "/icons/left.svg"),
       icon_size: 32,
+      x_align: Clutter.ActorAlign.START,
     });
-    this.buds.add_child(this.lIcon);
-    //Transition, might be a better solution
-    this.buds.add_child(new St.Label({text: '   ', y_align: Clutter.ActorAlign.CENTER, }));
+    box.add_child(this.lIcon);
+    this.buds.add_child(box);
+    //Spacer not working
+    //this.buds.add_child(new St.Icon({icon_size: 8}));
     //Creating the right bud
+    var box = new St.BoxLayout({x_align: Clutter.ActorAlign.CENTER, x_expand: true});
     //Icon
     this.rIcon = new St.Icon({
       gicon: Gio.icon_new_for_string(this.path + "/icons/right.svg"),
       icon_size: 32,
+      x_align: Clutter.ActorAlign.END,
     });
-    this.buds.add_child(this.rIcon)
+    box.add_child(this.rIcon);
     //Label
-    this.rightLabel = new St.Label({text: '', y_align: Clutter.ActorAlign.CENTER, });
-    this.buds.add_child(this.rightLabel);
+    this.rightLabel = new St.Label({text: '', y_align: Clutter.ActorAlign.CENTER,x_align: Clutter.ActorAlign.END,});
+    box.add_child(this.rightLabel);
+    this.buds.add_child(box);
     //Creating the case
-    this.case = new PopupMenu.PopupMenuItem("", {reactive: false});
-    this.case.add_child(new St.Label({text: '       ', y_align: Clutter.ActorAlign.CENTER, }));
-    this.case.add_child(new St.Icon({
+    this.case = new PopupMenu.PopupMenuItem("", {reactive: false, });
+    //this.case.add_child(new St.Label({text: '       ', y_align: Clutter.ActorAlign.CENTER, }));
+    var box = new St.BoxLayout({x_align: Clutter.ActorAlign.CENTER, x_expand: true});
+    box.add_child(new St.Icon({
       gicon: Gio.icon_new_for_string(this.path + "/icons/case.svg"),
       icon_size: 45,
       y_align: Clutter.ActorAlign.CENTER,
+      x_align: Clutter.ActorAlign.CENTER,
     }));
     this.caseLabel = new St.Label({text: '', y_align: Clutter.ActorAlign.CENTER, x_align: Clutter.ActorAlign.CENTER, });
-    this.case.add_child(this.caseLabel);
+    box.add_child(this.caseLabel);
+    this.case.add_child(box);
     this.menu.addMenuItem(this.buds);
     this.menu.addMenuItem(this.case);
     Main.panel.addToStatusArea('BtGalaxyBudsBattIndicator', this);
@@ -169,9 +178,10 @@ var budsBattIndicator = GObject.registerClass({
           this.case.hide();
         }
 
+        //let onStates = [1,2]
+        //if(this.statusArray[2]>this.statusArray[3] && onStates.includes(this.statusArray[0])){
         //Setting the battery for the main icon
-        let onStates = [1,2]
-        if(this.statusArray[2]>this.statusArray[3] && onStates.includes(this.statusArray[0])){
+        if(this.statusArray[2]>this.statusArray[3] && this.statusArray[0] == 1){
           this.buttonText.set_text(this.statusArray[2] + "%");
         }else{
           this.buttonText.set_text(this.statusArray[3] + "%");
